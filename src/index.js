@@ -2,6 +2,7 @@ import RenderScheduler from './lock/render_scheduler';
 import Renderer from './lock/renderer';
 import PluginManager from './lock/plugin_manager';
 import * as idu from './utils/id_utils';
+import * as l from './lock/index';
 import { closeLock, removeLock, setupLock, updateLock } from './lock/actions';
 import { requestGravatar } from './gravatar/actions';
 import webAPI from './lock/web_api';
@@ -64,6 +65,10 @@ export default class Auth0LockPasswordless {
 
   update(f) {
     return updateLock(this.id, f);
+  }
+
+  setError(errMsg) {
+    return updateLock(this.id, l.setSubmitting, false, errMsg);
   }
 
   requestGravatar(email) {
